@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Epilogue', sans-serif;
+}
+.hero{
+    height: 90%;
+    width: 90%;
+    margin-left: 100px;
+}
+.height{
+    height: 9%;
+}
+.icons{
+    margin-top: 19%;
+}
