@@ -15,3 +15,32 @@
 .icons{
     margin-top: 19%;
 }
+@media (max-width: 800px){
+    .row{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .hero-img{
+        margin-bottom: 0px;
+
+    }
+    .hero-img img{
+        margin-left: 0px;
+    }
+    .col-sm-12{
+        width: 100%;
+        text-align: center;
+        margin: 155px 0px;
+    }
+    .content-container{
+        text-align: center;
+    }
+    .content-container h1 div{
+        display: inline;
+    }
+
+
+    .height{
+        display: none;
+    }
+}
