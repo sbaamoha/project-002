@@ -1,7 +1,9 @@
 import React, { useState} from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addSingleWorkout } from '../redux/reducers/dataReducer'
+import { RootState } from '../redux/store'
 const CreateWorkout = () => {
+    const userLogged = useSelector((state: RootState) => state.data.userLogged)
     const dispatch = useDispatch()
     const [title, setTitle] = useState<String>("")
     const [load, setLoad] = useState<string | number>("")
@@ -11,7 +13,14 @@ const CreateWorkout = () => {
     
     const handleSubmit:React.FormEventHandler<HTMLFormElement> = async (e: React.FormEvent) => {
         e.preventDefault();
-
+        if(!userLogged){
+            setError('please login before add new workout')
+            return;
+        }
+        if(title === '' || load === ''|| reps === ''){
+            setError("please fill all data")
+            return;
+        }
         const workout = {title, load, reps}
         const request = await fetch('http://localhost:4000/api',{
             method: 'POST',
@@ -41,8 +50,8 @@ const CreateWorkout = () => {
             <input className='w-[90%] px-2 my-3' type="number" value={load} onChange={(e) => setLoad(e.target.value)} />
             <label>reps:</label>
             <input className='w-[90%] px-2 my-3' type="number" value={reps} onChange={(e) => setreps(e.target.value)} />
-            <button className='capitalize p-2 shadow-sm rounded-md bg-green-400 my-4'>add new workout</button>
-            {error.length > 0? <div className='border rounded-md shadow-md p-2 bg-red-500 text-white'>{error}</div>: ""}
+            <button className='btn'>add new workout</button>
+            {error.length > 0? <div className='border rounded-md shadow-md p-2 text-red-500 capitalize my-6'>{error}</div>: ""}
         </form>
     </div>
   )

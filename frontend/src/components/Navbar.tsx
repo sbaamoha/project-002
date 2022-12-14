@@ -1,20 +1,36 @@
 import {Link} from "react-router-dom"
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { logout } from "../redux/reducers/dataReducer";
 import { RootState } from "../redux/store";
 
 const Navbar: React.FC = () => {
-    const isLogged = useSelector((state: RootState) => state.data)
-return (
+    const userIsLogged = useSelector((state: RootState) => state.data.userLogged)
+    const dispatch = useDispatch()
+    const userLogged = localStorage.getItem("user")
+    const handleLogout = () =>{
+        dispatch(logout())
+        localStorage.clear()
+    }
+
+    return (
     <header className="p-6 lg:px-12 bg-slate-300 shadow-md">
         <nav className="flex justify-between items-center">
             <Link to='/'>
-                <p className='uppercase text-2xl'>workouts</p> 
+                <p className='uppercase text-lg lg:text-2xl'>workouts</p> 
             </Link>
-            
-            {!isLogged.userLogged ? <div className="text-sm lg:text-lg flex gap-2 lg:gap-5 capitalize">
-                <Link className="p-2 text-white rounded-full bg-green-400 hover:text-black transition-all" to='/login'>login</Link>
-                <Link className="p-2 text-white rounded-full bg-green-400 hover:text-black transition-all" to='/signup'>signup</Link>
-            </div> : <div>{isLogged.user.email}</div>}
+            {userLogged == null ? <div className="text-sm lg:text-lg flex gap-2 lg:gap-5 capitalize">
+                <div className="hidden">
+                    {userIsLogged}
+                </div>
+                <Link className="btn" to='/login'>login</Link>
+                <Link className="btn" to='/signup'>signup</Link>
+            </div> : 
+                <div className="flex items-center gap-2 text-sm lg:text-2xl capitalize">
+                    <p>{JSON.parse(userLogged)?.split('@')[0]}</p>
+                    <button 
+                        onClick={handleLogout}
+                        className="btn">logout</button>
+                </div>}
         </nav>
     </header>
 );

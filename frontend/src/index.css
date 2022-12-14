@@ -3,7 +3,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base{
 
-input{
-    @apply rounded-lg 
+
+    .btn{
+        @apply inline-block capitalize text-lg p-2 rounded-full shadow-lg bg-gray-400 text-white hover:text-black
+    }
+    input{
+        @apply rounded-lg 
+    }
 }

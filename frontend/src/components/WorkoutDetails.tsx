@@ -1,5 +1,6 @@
 import {addWorkout,deleteWorkout} from '../redux/reducers/dataReducer'
 import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../redux/store';
 
 interface WorkoutType  {
   _id: string,
@@ -26,7 +27,6 @@ const WorkoutDetails: React.FC<Props> = ({workout}) => {
       },
     })
     const response = await request.json()
-    console.log(response)
     dispatch(deleteWorkout(response))
     }catch(error){
       console.log(error)
@@ -34,17 +34,19 @@ const WorkoutDetails: React.FC<Props> = ({workout}) => {
   }
 
   return (
-    <div className="relative p-3 lg:p-6 shadow-md capitalize rounded-md text-lg">
-        <h2 className="text-3xl text-green-300">{workout.title}</h2>
-        <p className="py-2">reps: {workout.reps}</p>
-        <p>load: {workout.load}</p>
-        <p
-        onClick={handleDelete} 
-        className="text-sm text-white absolute top-[70%] lg:top-1  right-1 px-2 py-1 rounded-2xl bg-red-500 cursor-pointer"
-        >
-        delete
-        </p>
-    </div>
+    
+      <div className="relative p-3 lg:p-6 shadow-md capitalize rounded-md text-lg">
+          <h2 className="text-3xl text-green-300">{workout.title}</h2>
+          <p className="py-2">reps: {workout.reps}</p>
+          <p>load: {workout.load}</p>
+          <p
+          onClick={handleDelete} 
+          className="text-sm text-white absolute top-[70%] lg:top-1  right-1 px-2 py-1 rounded-2xl bg-red-500 cursor-pointer"
+          >
+          delete
+          </p>
+      </div>
+    
   )
 }
 

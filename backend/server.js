@@ -3,8 +3,11 @@ const express = require('express')
 const mongoose = require('mongoose')
 const router = require('./routes/workouts')
 const userRouter = require('./routes/user')
-
 const app = express()
+app.use(express.json())
+
+
+
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -13,7 +16,6 @@ app.use(function(req, res, next) {
     next();
   });
 
-app.use(express.json())
 
 app.use((req,res,next) => {
     console.log(req.path, req.method)

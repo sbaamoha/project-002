@@ -45,11 +45,17 @@ export const workoutSlice = createSlice({
         loginUser(state: InitState, action: PayloadAction<User>){
             state.user = action.payload
             state.userLogged = true
-        }
+        },
+        logout(state: InitState){
+            state.userLogged = false,
+            state.user = {
+                email: null
+            }
+        }   
     }
 })
 
-export const {addWorkout, deleteWorkout,addSingleWorkout,loginUser} = workoutSlice.actions;
+export const {addWorkout, deleteWorkout,addSingleWorkout,loginUser,logout} = workoutSlice.actions;
 export const wourkoutSlice = (state: RootState) => state.data
 
 export default workoutSlice.reducer

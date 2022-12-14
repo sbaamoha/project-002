@@ -4,6 +4,7 @@ import { RootState } from '../redux/store.js';
 import {addWorkout} from '../redux/reducers/dataReducer.js'
 import CreateWorkout from '../components/CreateWorkout'
 import WorkoutDetails from '../components/WorkoutDetails'
+import { Link } from 'react-router-dom';
 type Workout = {
     _id: string,
     title: string,
@@ -15,8 +16,10 @@ type Workout = {
 }
 
 const Home = () => {
-    const workouts = useSelector((state: RootState) => state.data.workouts)
+    const data = useSelector((state: RootState) => state.data)
     const dispatch = useDispatch()
+    const userLogged = localStorage.getItem("user")
+
     useEffect(() => {
 
         const fetchData = async () => {
@@ -32,9 +35,14 @@ const Home = () => {
      <div className=''>
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-10'>
             <div className='order-last lg:-order-1 col-span-2 px-6 lg:px-12'>
-            {workouts ? workouts.map(workout => (
-                <WorkoutDetails key={(workout._id)} workout={workout} />
-            )): ""}
+                {userLogged !== null ? data.workouts && data.workouts.map(workout => (
+                    <WorkoutDetails key={(workout._id)} workout={workout} />)) : 
+                <div className='capitalize text-2xl my-12 p-6 shadow-lg rounded-lg'>
+                    <h2>please login so you can see and add workouts</h2>
+                    <Link to='/login'><button className='btn'>login</button></Link>
+                </div>
+                }
+            
 
             </div>
             <div className=''>
